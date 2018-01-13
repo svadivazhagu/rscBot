@@ -12,6 +12,6 @@ are present.
   5. !remove "name_of_game" = removes a user from a game (TBD)
   6. !delete "name_of_game" = deletes a particular game (TBD)
 
-####Things to Remember
+#### Things to Remember
 1. When adding rscBot to your server, make sure your permissions in the invite link is set to 392192 (allowing for message
 manipulation by the bot.)
