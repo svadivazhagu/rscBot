@@ -6,24 +6,24 @@ import csv
 import numpy as np
 import discord
 from discord.ext import commands
-
+import os
 bot = commands.Bot(command_prefix='!')
-gameList = np.empty
-binary = np.empty
-userList = np.empty
-
 
 #Import the csv of Game Names into a 1 x G matrix (G = # of Games
 def import_gameList(filename='gameList.csv'):
-    gameList = np.genfromtxt(filename, dtype='str', delimiter=' ')
-    print(gameList)
-    return gameList
+    if os.stat(filename).st_size != 0:
+        with open(filename, "r"):
+            gameList = np.genfromtxt(filename, dtype='str', delimiter=' ')
+            print(gameList)
+        return gameList
 
 #Import the csv of User IDs into a 1 x U matrix (U = # of users)
 def import_userList(filename='userList.csv'):
-    userList = np.genfromtxt(filename, dtype='str', delimiter=' ')
-    print(userList)
-    return userList
+    if os.stat(filename).st_size != 0:
+        with open(filename, "r"):
+            userList = np.genfromtxt(filename, dtype='str', delimiter=' ')
+            print(userList)
+        return userList
 
 '''
 Import the csv of User IDs into a G x U  binary matrix where
@@ -31,20 +31,21 @@ Import the csv of User IDs into a G x U  binary matrix where
 0 = dont have the game
 '''
 def import_binary(filename='Bmatrix.csv'):
-    binaryMatrix = np.genfromtxt(filename, dtype='int', delimiter=' ')
-    print(binaryMatrix)
-    return binaryMatrix
+    if os.stat(filename).st_size != 0:
+        with open(filename, "r"):
+            binaryMatrix = np.genfromtxt(filename, dtype='int', delimiter=' ')
+            print(binaryMatrix)
+        return binaryMatrix
 
-
+gameList = import_gameList('gameList.csv')
+binary = import_binary('Bmatrix.csv')
+userList = import_userList('userList.csv')
 
 
 
 
 @bot.event
 async def on_ready():
-    gameList = import_gameList('gameList.csv')
-    binary = import_binary('Bmatrix.csv')
-    userList = import_userList('userList.csv')
     print('Ready when you are, with username: ' + bot.user.name + " and the ID: " + bot.user.id)
 
 
@@ -101,7 +102,13 @@ async def kick(ctx, user: discord.Member):
 # Adds user ID under game entry in CSV file
 @bot.command(pass_context=True)
 async def add(ctx):
-    await bot.say("YOU RAN ADD")
+    splitMsg = ctx.message.content.split(" ")[1].lower()
+    userid = ctx.message.author.id
+    game = ''.join(ctx.message.content.split(" ")[1])
+    with open(userList, "a") as csvfile:
+        filewriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+        filewriter.writerow([userid])
+    await bot.say(game + " has been added to your game list.")
 
 '''
 # Adds user ID in new column game entry in CSV file when they play the game with discord running in the background
@@ -124,10 +131,11 @@ async def create(ctx):
     splitMsg = ctx.message.content.split(" ")[1].lower()
     fullWord = ''.join(ctx.message.content.split(" ")[1])
 
-    with open("gameList.csv", "a") as csvfile:
+    with open('gameList.csv', "a") as csvfile:
         filewriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
         filewriter.writerow([splitMsg])
     await bot.say(fullWord + " has been added to the game list.")
+
 
 # Lists all games added in the csv file
 @bot.command(pass_context=True)
