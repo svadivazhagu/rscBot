@@ -8,6 +8,10 @@ import discord
 from discord.ext import commands
 
 bot = commands.Bot(command_prefix='!')
+gameList = np.empty
+binary = np.empty
+userList = np.empty
+
 
 #Import the csv of Game Names into a 1 x G matrix (G = # of Games
 def import_gameList(filename='gameList.csv'):
@@ -31,7 +35,7 @@ def import_binary(filename='Bmatrix.csv'):
     print(binaryMatrix)
     return binaryMatrix
 
-gameList,binary,userList = np.empty
+
 
 
 
@@ -129,7 +133,6 @@ async def create(ctx):
 # Lists all games added in the csv file
 @bot.command(pass_context=True)
 async def gameList(ctx):
-    gameList = import_gameList(filename='gameList.csv')
     await bot.say("We got:")
     for i in range(len(gameList)):
         print(i)
@@ -139,7 +142,7 @@ async def gameList(ctx):
 
 
 # client.run('MzkyOTE3OTU1NDQ2MzA4ODY1.DRuPOw.Z3aGgdvDuKP8wAkHMt2vSPSEwZ4')
-bot.run('NDAxNjM3MTIzNzgzOTE3NTY4.DTtFPQ.t9TTZ5qM2KNoDXr87LpvxVxqMgc')
+bot.run('NDAxNTM4OTU0NDg4MTg0ODMy.DTrriQ.y2QzATd4j8PVsHkuhlwv7Azmnyc')
 
 # SURYA AUTH: NDAxNjM3MTIzNzgzOTE3NTY4.DTtFPQ.t9TTZ5qM2KNoDXr87LpvxVxqMgc
 # DAN AUTH: NDAxNTM4OTU0NDg4MTg0ODMy.DTrriQ.y2QzATd4j8PVsHkuhlwv7Azmnyc
