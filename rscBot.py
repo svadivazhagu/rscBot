@@ -74,12 +74,17 @@ async def hello(ctx):
 
 # sending people messages
 
-@bot.event
-async def on_message(ctx):
-    if ctx.content.startswith('!myid'):
-        await bot.send_message(ctx.author, 'Say y')
-        msg = await bot.wait_for_message(author=ctx.author, content='y')
-        await bot.send_message(ctx.author, 'Hello.')
+@bot.command(pass_context=True)
+async def recruit(ctx):
+    await bot.send_message(discord.User(id = ctx.message.author.id), 'Type yes if you can join; no if you cannot.')
+    userDecision = await bot.wait_for_message(author=ctx.message.author)
+    print (userDecision.content)
+    if str(userDecision.content) == "yes":
+        await bot.say(ctx.message.author.nick + " is going to join!")
+    elif str(userDecision.content) == "no":
+        await bot.say(ctx.message.author.nick + " is not going to join.")
+
+
 
 @bot.command(pass_context=True)
 async def info(ctx, user: discord.Member):
