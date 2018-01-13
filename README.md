@@ -1,4 +1,4 @@
-# rscBot
+# rscBot (Rush Site C Bot)
 A Discord bot written in Python making finding groups to play games within a Discord server easier, using Discord.py.
 
 ## Overview
