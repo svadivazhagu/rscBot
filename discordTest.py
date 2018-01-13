@@ -94,13 +94,14 @@ async def recruit(ctx,gamename):
 @bot.command(pass_context=True)
 async def addGame(ctx, message):
     splitMsg = ctx.message.content.split(" ")
+    Msglower = splitMsg[1].lower
     with open("gameList.csv", "a") as csvfile:
         filewriter =csv.writer(csvfile, delimiter=',',
                                quotechar='|', quoting=csv.QUOTE_MINIMAL)
-        filewriter.writerow([splitMsg[1]].lower)
+        filewriter.writerow([Msglower])
     await bot.say(splitMsg[1] + " has been added to the game list.")
 #client.run('MzkyOTE3OTU1NDQ2MzA4ODY1.DRuPOw.Z3aGgdvDuKP8wAkHMt2vSPSEwZ4')
-bot.run('MzkyOTE3OTU1NDQ2MzA4ODY1.DRuPOw.Z3aGgdvDuKP8wAkHMt2vSPSEwZ4')
+bot.run('NDAxNTM4OTU0NDg4MTg0ODMy.DTrriQ.y2QzATd4j8PVsHkuhlwv7Azmnyc')
 
 #SURYA AUTH: MzkyOTE3OTU1NDQ2MzA4ODY1.DRuPOw.Z3aGgdvDuKP8wAkHMt2vSPSEwZ4
 #DAN AUTH: NDAxNTM4OTU0NDg4MTg0ODMy.DTrriQ.y2QzATd4j8PVsHkuhlwv7Azmnyc
