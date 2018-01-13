@@ -1,7 +1,6 @@
 #firstbot
 
 import discord
-import csv
 from discord.ext import commands
 from discord.ext.commands import Bot
 import asyncio
@@ -17,12 +16,11 @@ async def on_ready():
     print ('Ready when you are xd')
     print ("I am running on " + bot.user.name)
     print ("With the ID: " + bot.user.id)
-
-@bot.command(pass_context=True)
-async def helpme(ctx):
-    await bot.say("This is how you use this bot:")
-    #finish this later
-
+@client.event
+async def on_ready():
+    print ('Ready when you are xd')
+    print ("I am running on " + client.user.name)
+    print ("With the ID: " + client.user.id)
 
 @bot.command(pass_context=True)
 async def ping(ctx):
@@ -34,19 +32,6 @@ async def hello(ctx):
     await bot.say("HELLO WORLD!")
     print("Hello World!")
 
-
-@bot.command(pass_context=True)
-async def myid(ctx):
-    await bot.say("YOUR ID IS: " + ctx.message.author.id)
-    #print("Your ID is: " + ctx.author)
-'''
-@bot.event
-async def on_message(message):
-    if message.content.startswith("!greet"):
-        await bot.send_message(message.channel, "Say hello")
-    if message.content.startswith("!h"):
-        hello(message)
-'''
 @client.event
 async def on_message(message):
     if message.content.startswith('$start'):
@@ -57,6 +42,10 @@ async def on_message(message):
             await client.send_message(message.channel, fmt.format(3 - i))
 
         await client.send_message(message.channel, 'Good job!')
+@bot.command(pass_context=True)
+async def myid(ctx):
+    await bot.say("YOUR ID IS: " + ctx.author.id)
+    print("Your ID is: " + ctx.author)
 
 @bot.command(pass_context=True)
 async def info(ctx, user: discord.Member):
@@ -76,29 +65,16 @@ async def add(ctx, arg):
     word = arg
     await bot.say(word)
 
-'''
-@bot.command(pass_context=True)
-async def recruit(ctx, gamename, num_players):
-    if num_players <= 0:
-        await bot.say("You need at least 1 person.")
-    else:
-        for i in range(num_players):
-            ''''''
-
-@bot.command(pass_context=True)
-async def recruit(ctx,gamename):
-    for i in range(10000):
-        ''''''
-'''
-
 @bot.command(pass_context=True)
 async def addGame(ctx, message):
-    splitMsg = ctx.message.content.split(" ")
+    splitMsg = ctx.message.content.split(" ")[1].lower()
+    fullWord = ''.join(ctx.message.content.split(" ")[1])
+
     with open("gameList.csv", "a") as csvfile:
         filewriter =csv.writer(csvfile, delimiter=',',
                                quotechar='|', quoting=csv.QUOTE_MINIMAL)
-        filewriter.writerow([splitMsg[1]].lower)
-    await bot.say(splitMsg[1] + " has been added to the game list.")
+        filewriter.writerow([splitMsg])
+    await bot.say(fullWord + " has been added to the game list.")
 #client.run('MzkyOTE3OTU1NDQ2MzA4ODY1.DRuPOw.Z3aGgdvDuKP8wAkHMt2vSPSEwZ4')
 bot.run('MzkyOTE3OTU1NDQ2MzA4ODY1.DRuPOw.Z3aGgdvDuKP8wAkHMt2vSPSEwZ4')
 
