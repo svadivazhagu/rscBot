@@ -44,13 +44,23 @@ async def hello(ctx):
 #         await client.send_message(message.channel, 'Good job!')
 
 
-# IF I FORGET THIS IS HOW TO FETCH USER ID STRAIGHT OFF THEIR MESSAGE
+# sending people messages
 
 @bot.command(pass_context=True)
 async def myid(ctx):
     await bot.say(ctx.message.author.nick + "'s User ID: " + ctx.message.author.id)
     print("User " + ctx.message.author.nick + " requested their User ID, which is " + ctx.message.author.id)
-    await bot.send_message(discord.User(id=ctx.message.author.id), "testing")
+    userDecision = input(await bot.send_message(discord.User(id=ctx.message.author.id), "Type 'y' or 'n' if you would like to join or not."))
+    if userDecision == "y":
+        await bot.say(ctx.message.author.nick + " is joining now!")
+    else:
+        await bot.say(ctx.message.author.id + " is not joining.")
+    #     if message.content == "y":
+    #     await bot.say(ctx.message.author.id + " is joining now!")
+    #
+    #     else:
+    #     await bot.say(ctx.message.author.id + " is not joining.")
+    # fmt = "Please join the Discord server!"
 
 
 @bot.command(pass_context=True)
