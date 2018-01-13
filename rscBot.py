@@ -78,11 +78,13 @@ async def hello(ctx):
 async def myid(ctx):
     await bot.say(ctx.message.author.nick + "'s User ID: " + ctx.message.author.id)
     print("User " + ctx.message.author.nick + " requested their User ID, which is " + ctx.message.author.id)
-    userDecision = input(await bot.send_message(discord.User(id=ctx.message.author.id), "Type 'y' or 'n' if you would like to join or not."))
-    if userDecision == "y":
+    userDecision = input(await bot.send_message(discord.User(id=ctx.message.author.id), "Type 'yes' or 'no' if you would like to join or not."))
+    if userDecision == "yes":
         await bot.say(ctx.message.author.nick + " is joining now!")
-    else:
+    elif userDecision == "no":
         await bot.say(ctx.message.author.id + " is not joining.")
+    else:
+        await bot.say(ctx.message.author.id + ", you messed up.")
     #     if message.content == "y":
     #     await bot.say(ctx.message.author.id + " is joining now!")
     #
