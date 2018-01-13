@@ -66,7 +66,7 @@ async def add(ctx, arg):
     await bot.say(word)
 
 @bot.command(pass_context=True)
-async def addGame(ctx, message):
+async def create(ctx, message):
     splitMsg = ctx.message.content.split(" ")[1].lower()
     fullWord = ''.join(ctx.message.content.split(" ")[1])
 
