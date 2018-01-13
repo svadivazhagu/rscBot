@@ -1,6 +1,7 @@
 #firstbot
 
 import discord
+import csv
 from discord.ext import commands
 from discord.ext.commands import Bot
 import asyncio
@@ -18,6 +19,12 @@ async def on_ready():
     print ("With the ID: " + bot.user.id)
 
 @bot.command(pass_context=True)
+async def helpme(ctx):
+    await bot.say("This is how you use this bot:")
+    #finish this later
+
+
+@bot.command(pass_context=True)
 async def ping(ctx):
     await bot.say(":ping_pong: ping!    ! xSSS")
     print ("user has pinged")
@@ -27,17 +34,17 @@ async def hello(ctx):
     await bot.say("HELLO WORLD!")
     print("Hello World!")
 
+@bot.command(pass_context=True)
+async def myid(ctx):
+    await bot.say("YOUR ID IS: " + ctx.author.id)
+    #print("Your ID is: " + ctx.author)
+
 @bot.event
 async def on_message(message):
     if message.content.startswith("!greet"):
         await bot.send_message(message.channel, "Say hello")
-        msg = await bot.wait_for_message(author=message.author, content="hello")
-        await bot.send_message(message.channel, "Hello.")
-
-@bot.command(pass_context=True)
-async def myid(ctx):
-    await bot.say("YOUR ID IS: " + ctx.author.id)
-    print("Your ID is: " + ctx.author)
+    if message.content.startswith("!h"):
+        hello(message)
 
 @bot.command(pass_context=True)
 async def info(ctx, user: discord.Member):
@@ -57,6 +64,21 @@ async def add(ctx, arg):
     quotes = '"'
     word = arg + quotes
     await bot.say(word)
+'''
+@bot.command(pass_context=True)
+async def recruit(ctx, gamename, num_players):
+    if num_players <= 0:
+        await bot.say("You need at least 1 person.")
+    else:
+        for i in range(num_players):
+            ''''''
+
+@bot.command(pass_context=True)
+async def recruit(ctx,gamename):
+    for i in range(10000):
+        ''''''
+'''
+
 #client.run('NDAxNTM4OTU0NDg4MTg0ODMy.DTrriQ.y2QzATd4j8PVsHkuhlwv7Azmnyc')
 bot.run('NDAxNTM4OTU0NDg4MTg0ODMy.DTrriQ.y2QzATd4j8PVsHkuhlwv7Azmnyc')
 
