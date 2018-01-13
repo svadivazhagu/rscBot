@@ -73,7 +73,6 @@ async def hello(ctx):
 
 
 # sending people messages
-
 @bot.event
 async def on_message(ctx):
     if ctx.content.startswith('!myid'):
