@@ -74,24 +74,12 @@ async def hello(ctx):
 
 # sending people messages
 
-@bot.command(pass_context=True)
-async def myid(ctx):
-    await bot.say(ctx.message.author.nick + "'s User ID: " + ctx.message.author.id)
-    print("User " + ctx.message.author.nick + " requested their User ID, which is " + ctx.message.author.id)
-    userDecision = input(await bot.send_message(discord.User(id=ctx.message.author.id), "Type 'yes' or 'no' if you would like to join or not."))
-    if userDecision == "yes":
-        await bot.say(ctx.message.author.nick + " is joining now!")
-    elif userDecision == "no":
-        await bot.say(ctx.message.author.id + " is not joining.")
-    else:
-        await bot.say(ctx.message.author.id + ", you messed up.")
-    #     if message.content == "y":
-    #     await bot.say(ctx.message.author.id + " is joining now!")
-    #
-    #     else:
-    #     await bot.say(ctx.message.author.id + " is not joining.")
-    # fmt = "Please join the Discord server!"
-
+@bot.event
+async def on_message(ctx):
+    if ctx.content.startswith('!myid'):
+        await bot.send_message(ctx.author, 'Say y')
+        msg = await bot.wait_for_message(author=ctx.author, content='y')
+        await bot.send_message(ctx.author, 'Hello.')
 
 @bot.command(pass_context=True)
 async def info(ctx, user: discord.Member):
