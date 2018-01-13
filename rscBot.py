@@ -9,14 +9,39 @@ from discord.ext import commands
 
 bot = commands.Bot(command_prefix='!')
 
+#Import the csv of Game Names into a 1 x G matrix (G = # of Games
 def import_gameList(filename='gameList.csv'):
     gameList = np.genfromtxt(filename, dtype='str', delimiter=' ')
     print(gameList)
     return gameList
 
+#Import the csv of User IDs into a 1 x U matrix (U = # of users)
+def import_userList(filename='userList.csv'):
+    userList = np.genfromtxt(filename, dtype='str', delimiter=' ')
+    print(userList)
+    return userList
+
+'''
+Import the csv of User IDs into a G x U  binary matrix where
+1 = they have the game
+0 = dont have the game
+'''
+def import_binary(filename='Bmatrix.csv'):
+    binaryMatrix = np.genfromtxt(filename, dtype='int', delimiter=' ')
+    print(binaryMatrix)
+    return binaryMatrix
+
+
+gameList = import_gameList('gameList.csv')
+binary = import_binary('Bmatrix.csv')
+userList = import_userList('userList.csv')
+
+
+
 
 @bot.event
 async def on_ready():
+
     print('Ready when you are, with username: ' + bot.user.name + " and the ID: " + bot.user.id)
 
 

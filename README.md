@@ -9,9 +9,10 @@ are present.
   1. !create "name_of_game" = makes a game entry within the gameList.csv file (file itself created if not already present)
   2. !add "name_of_game" = adds the user to the list of players that play that game (TBD)
   4. !recruit "name_of_game" = DM's **online** users who can play the game, asking if they'd like to play, with a timed response factor enabled to guarantee presence. (TBD)
-  5. !join ""
+  5. !join = accepts a user's request to join a game (TBD)
   5. !remove "name_of_game" = removes a user from a game (TBD)
   6. !delete "name_of_game" = deletes a particular game (TBD)
+  7. !gameList = lists games added
 
 #### Things to Remember
 1. When adding rscBot to your server, make sure your permissions in the invite link is set to 392192 (allowing for message
