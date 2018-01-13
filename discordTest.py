@@ -11,7 +11,6 @@ bot = commands.Bot(command_prefix='!')
 client = discord.Client()
 
 
-
 @bot.event
 async def on_ready():
     print ('Ready when you are xd')
@@ -20,7 +19,7 @@ async def on_ready():
 
 @bot.command(pass_context=True)
 async def ping(ctx):
-    await bot.say(":ping_pong: ping!! xSSS")
+    await bot.say(":ping_pong: ping!    ! xSSS")
     print ("user has pinged")
 
 @bot.command(pass_context=True)
@@ -52,6 +51,13 @@ async def info(ctx, user: discord.Member):
 async def kick(ctx, user: discord.Member):
     await bot.say(":boot: Cya, {}. Ya loser!".format(user.name))
     await bot.kick(user)
+
+
+@bot.command(pass_context=True)
+async def add(ctx, arg):
+    quotes = '"'
+    word = arg + quotes
+    await bot.say(word)
 
 bot.run('NDAxNTM4OTU0NDg4MTg0ODMy.DTrriQ.y2QzATd4j8PVsHkuhlwv7Azmnyc')
 #SURYA AUTH: MzkyOTE3OTU1NDQ2MzA4ODY1.DRuPOw.Z3aGgdvDuKP8wAkHMt2vSPSEwZ4
