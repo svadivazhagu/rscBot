@@ -8,6 +8,6 @@ are present.
 ### Commands
   1. !create "name_of_game" = makes a game entry within the gameList.csv file (file itself created if not already present)
   2. !add "name_of_game" = adds the user to the list of players that play that game
-  4. !recruit "name_of_game" "num_people" = DM's however many users are inputted
+  4. !recruit "name_of_game" = DM's **online** users who a part of a game, asking if they'd like to play, with a timed response factor enabled to guarantee presence.
   5. !remove "name_of_game" = removes a user from a game
-  6. !deletegame "name_of_game" = deletes a particular game
+  6. !delete "name_of_game" = deletes a particular game
