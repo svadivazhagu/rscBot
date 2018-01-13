@@ -25,8 +25,8 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="238">
-                <caret line="14" column="5" lean-forward="false" selection-start-line="14" selection-start-column="5" selection-end-line="14" selection-end-column="5" />
+              <first_editor relative-caret-position="17">
+                <caret line="1" column="31" lean-forward="false" selection-start-line="1" selection-start-column="31" selection-end-line="1" selection-end-column="31" />
                 <folding />
               </first_editor>
               <second_editor />
@@ -361,7 +361,14 @@
       <option name="project" value="LOCAL" />
       <updated>1515831777758</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Just updated the Things to Remember section in the Readme to have proper formatting.">
+      <created>1515831893124</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1515831893124</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TodoView">
@@ -410,7 +417,8 @@
     <MESSAGE value="Can take input + stores files as a CSV file within the directory." />
     <MESSAGE value="Readme edited" />
     <MESSAGE value="Added somewhat thorough commenting across the file, updated &#10;info function to return a prettier answer..." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added somewhat thorough commenting across the file, updated &#10;info function to return a prettier answer..." />
+    <MESSAGE value="Just updated the Things to Remember section in the Readme to have proper formatting." />
+    <option name="LAST_COMMIT_MESSAGE" value="Just updated the Things to Remember section in the Readme to have proper formatting." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -491,8 +499,8 @@
       </provider>
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="238">
-            <caret line="14" column="5" lean-forward="false" selection-start-line="14" selection-start-column="5" selection-end-line="14" selection-end-column="5" />
+          <first_editor relative-caret-position="17">
+            <caret line="1" column="31" lean-forward="false" selection-start-line="1" selection-start-column="31" selection-end-line="1" selection-end-column="31" />
             <folding />
           </first_editor>
           <second_editor />

@@ -1,5 +1,5 @@
 # rscBot
-A Discord bot written in making finding groups to play games within a Discord server easier, using Discord.py.
+A Discord bot written in Python making finding groups to play games within a Discord server easier, using Discord.py.
 
 ## Overview
 Users can add games to a file and then add their Discord User ID under the game's entry, allowing for easy recruiting for games by automating DMing users to play. A timed response component is included to ensure that users
