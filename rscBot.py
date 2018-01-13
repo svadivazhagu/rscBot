@@ -7,22 +7,27 @@ import numpy as np
 import discord
 from discord.ext import commands
 import os
+
 bot = commands.Bot(command_prefix='!')
+global gameList
+global userList
+global binary
 
 #Import the csv of Game Names into a 1 x G matrix (G = # of Games
 def import_gameList(filename='gameList.csv'):
     if os.stat(filename).st_size != 0:
-        with open(filename, "r"):
-            gameList = np.genfromtxt(filename, dtype='str', delimiter=' ')
-            print(gameList)
+        f = open(filename, "r")
+        gameList = np.genfromtxt(filename, dtype='str', delimiter=' ')
+        f.close()
         return gameList
 
 #Import the csv of User IDs into a 1 x U matrix (U = # of users)
 def import_userList(filename='userList.csv'):
     if os.stat(filename).st_size != 0:
-        with open(filename, "r"):
-            userList = np.genfromtxt(filename, dtype='str', delimiter=' ')
-            print(userList)
+        f = open(filename, "r")
+        userList = np.genfromtxt(filename, dtype='str', delimiter=' ')
+        #print(userList)
+        f.close()
         return userList
 
 '''
@@ -32,22 +37,46 @@ Import the csv of User IDs into a G x U  binary matrix where
 '''
 def import_binary(filename='Bmatrix.csv'):
     if os.stat(filename).st_size != 0:
-        with open(filename, "r"):
-            binaryMatrix = np.genfromtxt(filename, dtype='int', delimiter=' ')
-            print(binaryMatrix)
+        f = open(filename, "r")
+        binaryMatrix = np.genfromtxt(filename, dtype='int', delimiter=' ')
+        #print(binaryMatrix)
+        f.close()
         return binaryMatrix
 
 gameList = import_gameList('gameList.csv')
 binary = import_binary('Bmatrix.csv')
 userList = import_userList('userList.csv')
 
+#returns game index from a string
+def findGameIndex(game_name):
+    gameList = import_gameList()
+    if type(gameList) != type(None):
+        for i in range(len(gameList)):
+            if gameList[i] == game_name:
+                return i
 
-
+#returns game name from a index
+def findGameName(index):
+    gameList = import_gameList()
+    if type(gameList) != type(None):
+        if len(gameList) <= index:
+            return gamelist[index]
 
 @bot.event
 async def on_ready():
+    #on start up ge list of all members and add them to the matrix
+    for server in bot.servers:
+        for member in server.members:
+            if type(userList) != type(None):
+                for len
+            print(member.id)
+    print(gameList)
+    print(userList)
     print('Ready when you are, with username: ' + bot.user.name + " and the ID: " + bot.user.id)
 
+@bot.event
+async def on_member_join(member):
+    print(member.id)
 
 @bot.command(pass_context=True)
 async def ping(ctx):
@@ -73,13 +102,19 @@ async def hello(ctx):
 #         await client.send_message(message.channel, 'Good job!')
 
 
-# sending people messages
-@bot.event
-async def on_message(ctx):
-    if ctx.content.startswith('!myid'):
-        await bot.send_message(ctx.author, 'Say y')
-        msg = await bot.wait_for_message(author=ctx.author, content='y')
-        await bot.send_message(ctx.author, 'Hello.')
+
+
+@bot.command(pass_context=True)
+async def recruit(ctx):
+    await bot.send_message(discord.User(id = ctx.message.author.id), 'Type yes if you can join; no if you cannot.')
+    userDecision = await bot.wait_for_message(author=ctx.message.author)
+    print (userDecision.content)
+    if str(userDecision.content) == "yes":
+        await bot.say(ctx.message.author.nick + " is going to join!")
+    elif str(userDecision.content) == "no":
+        await bot.say(ctx.message.author.nick + " is not going to join.")
+
+
 
 @bot.command(pass_context=True)
 async def info(ctx, user: discord.Member):
@@ -139,13 +174,17 @@ async def create(ctx):
 
 # Lists all games added in the csv file
 @bot.command(pass_context=True)
-async def gameList(ctx):
-    await bot.say("We got:")
-    for i in range(len(gameList)):
-        print(i)
-        print(gameList[i])
-        await bot.say(gameList[i])
-
+async def gamelist(ctx):
+    gameList = import_gameList()
+    if type(gameList) != type(None):
+        #print(type(gameList))
+        await bot.say("We got:")
+        for i in range(len(gameList)):
+            #print(i)
+            #print(gameList[i])
+            await bot.say(gameList[i])
+    else:
+        await bot.say("Game List is empty")
 
 
 # client.run('MzkyOTE3OTU1NDQ2MzA4ODY1.DRuPOw.Z3aGgdvDuKP8wAkHMt2vSPSEwZ4')
