@@ -7,6 +7,7 @@ import numpy as np
 import discord
 from discord.ext import commands
 import os
+import time
 
 bot = commands.Bot(command_prefix='!')
 global gameList
@@ -65,11 +66,6 @@ def findGameName(index):
 @bot.event
 async def on_ready():
     #on start up ge list of all members and add them to the matrix
-    for server in bot.servers:
-        for member in server.members:
-            if type(userList) != type(None):
-                for len
-            print(member.id)
     print(gameList)
     print(userList)
     print('Ready when you are, with username: ' + bot.user.name + " and the ID: " + bot.user.id)
@@ -107,14 +103,26 @@ async def hello(ctx):
 @bot.command(pass_context=True)
 async def recruit(ctx):
     await bot.send_message(discord.User(id = ctx.message.author.id), 'Type yes if you can join; no if you cannot.')
-    userDecision = await bot.wait_for_message(author=ctx.message.author)
-    print (userDecision.content)
-    if str(userDecision.content) == "yes":
-        await bot.say(ctx.message.author.nick + " is going to join!")
+    userDecision = await bot.wait_for_message(timeout = 5, author=ctx.message.author)
+    if type(userDecision) == type(None):
+        await bot.send_message(discord.User(id=ctx.message.author.id), "You didn't make it in time!")
+        await bot.say(ctx.message.author.display_name + " didn't respond in time.")
     elif str(userDecision.content) == "no":
-        await bot.say(ctx.message.author.nick + " is not going to join.")
+        await bot.say(ctx.message.author.display_name + " is not going to join.")
+    else:
+        await bot.say(ctx.message.author.display_name + " is going to join!")
 
-
+@bot.command(pass_context=True)
+async def recruitUser(ctx, user: discord.Member):
+    await bot.send_message(discord.User(id=user.id), 'Type yes if you can join; no if you cannot.')
+    userDecision = await bot.wait_for_message(timeout=5, author=user)
+    if type(userDecision) == type(None):
+        await bot.send_message(discord.User(id=user.id), "You didn't make it in time!")
+        await bot.say(user.display_name + " didn't respond in time.")
+    elif str(userDecision.content) == "no":
+        await bot.say(user.display_name + " is not going to join.")
+    else:
+        await bot.say(user.display_name + " is going to join!")
 
 @bot.command(pass_context=True)
 async def info(ctx, user: discord.Member):
