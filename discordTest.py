@@ -27,12 +27,12 @@ async def hello(ctx):
     await bot.say("HELLO WORLD!")
     print("Hello World!")
 
-@client.event
+@bot.event
 async def on_message(message):
-    if message.content.startswith('$greet'):
-        await client.send_message(message.channel, 'Say hello')
-        msg = await client.wait_for_message(author=message.author, content='hello')
-        await client.send_message(message.channel, 'Hello.')
+    if message.content.startswith("!greet"):
+        await bot.send_message(message.channel, "Say hello")
+        msg = await bot.wait_for_message(author=message.author, content="hello")
+        await bot.send_message(message.channel, "Hello.")
 
 @bot.command(pass_context=True)
 async def myid(ctx):
@@ -52,13 +52,13 @@ async def kick(ctx, user: discord.Member):
     await bot.say(":boot: Cya, {}. Ya loser!".format(user.name))
     await bot.kick(user)
 
-
 @bot.command(pass_context=True)
 async def add(ctx, arg):
     quotes = '"'
     word = arg + quotes
     await bot.say(word)
-
+#client.run('NDAxNTM4OTU0NDg4MTg0ODMy.DTrriQ.y2QzATd4j8PVsHkuhlwv7Azmnyc')
 bot.run('NDAxNTM4OTU0NDg4MTg0ODMy.DTrriQ.y2QzATd4j8PVsHkuhlwv7Azmnyc')
+
 #SURYA AUTH: MzkyOTE3OTU1NDQ2MzA4ODY1.DRuPOw.Z3aGgdvDuKP8wAkHMt2vSPSEwZ4
 #DAN AUTH: NDAxNTM4OTU0NDg4MTg0ODMy.DTrriQ.y2QzATd4j8PVsHkuhlwv7Azmnyc
