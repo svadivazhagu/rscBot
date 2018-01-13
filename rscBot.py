@@ -31,17 +31,16 @@ def import_binary(filename='Bmatrix.csv'):
     print(binaryMatrix)
     return binaryMatrix
 
-
-gameList = import_gameList('gameList.csv')
-binary = import_binary('Bmatrix.csv')
-userList = import_userList('userList.csv')
+gameList,binary,userList = np.empty
 
 
 
 
 @bot.event
 async def on_ready():
-
+    gameList = import_gameList('gameList.csv')
+    binary = import_binary('Bmatrix.csv')
+    userList = import_userList('userList.csv')
     print('Ready when you are, with username: ' + bot.user.name + " and the ID: " + bot.user.id)
 
 
