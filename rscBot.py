@@ -145,9 +145,17 @@ async def gameList(ctx):
         await bot.say(gameList[i])
 
 
+@bot.command(pass_context=True)
+async def onlineCheck(ctx):
+   # print(bot.get_all_members())
+    for server in bot.servers:
+        for member in server.members:
+            if member.status == discord.Status.online:
+                await bot.say(member)
+
 
 # client.run('MzkyOTE3OTU1NDQ2MzA4ODY1.DRuPOw.Z3aGgdvDuKP8wAkHMt2vSPSEwZ4')
-bot.run('NDAxNTM4OTU0NDg4MTg0ODMy.DTrriQ.y2QzATd4j8PVsHkuhlwv7Azmnyc')
+bot.run('NDAxNjM3MTIzNzgzOTE3NTY4.DTtFPQ.t9TTZ5qM2KNoDXr87LpvxVxqMgc')
 
 # SURYA AUTH: NDAxNjM3MTIzNzgzOTE3NTY4.DTtFPQ.t9TTZ5qM2KNoDXr87LpvxVxqMgc
 # DAN AUTH: NDAxNTM4OTU0NDg4MTg0ODMy.DTrriQ.y2QzATd4j8PVsHkuhlwv7Azmnyc
