@@ -2,9 +2,10 @@
 
 #Created by Surya Vadivazhagu (svadivazhagu on Github) & Daniel McDonough (Mcdonoughd) for the Hack @ WPI 2018 Hackathon
 
+import csv
+
 import discord
 from discord.ext import commands
-import csv
 
 bot = commands.Bot(command_prefix='!')
 
@@ -34,6 +35,8 @@ async def hello(ctx):
 #
 #         await client.send_message(message.channel, 'Good job!')
 
+
+# IF I FORGET THIS IS HOW TO FETCH USER ID STRAIGHT OFF THEIR MESSAGE
 @bot.command(pass_context=True)
 async def myid(ctx):
     await bot.say(ctx.message.author.nick + "'s User ID: " + ctx.message.author.id)
