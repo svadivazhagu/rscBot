@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e54be328-503e-490c-8641-b5e996252517" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/userList.csv" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rscBot.py" afterPath="$PROJECT_DIR$/rscBot.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/userList.csv" afterPath="$PROJECT_DIR$/userList.csv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/userlist.csv" afterPath="$PROJECT_DIR$/userlist.csv" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -38,8 +39,8 @@
       <file leaf-file-name="rscBot.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/rscBot.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="500">
-              <caret line="231" column="71" lean-forward="true" selection-start-line="231" selection-start-column="71" selection-end-line="231" selection-end-column="71" />
+            <state relative-caret-position="126">
+              <caret line="57" column="34" lean-forward="false" selection-start-line="57" selection-start-column="34" selection-end-line="57" selection-end-column="34" />
               <folding>
                 <element signature="e#222#232#0" expanded="true" />
               </folding>
@@ -634,7 +635,7 @@
     <entry file="file://$PROJECT_DIR$/discordTest.py" />
     <entry file="file://$USER_HOME$/Desktop/numpy-1.11.2/numpy-1.11.2/setup.py" />
     <entry file="file://$PROJECT_DIR$/discordTest.py" />
-    <entry file="file://$PROJECT_DIR$/README.md">
+    <entry file="file://$PROJECT_DIR$/gameList.csv">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -642,7 +643,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/gameList.csv">
+    <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -652,8 +653,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/rscBot.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="500">
-          <caret line="231" column="71" lean-forward="true" selection-start-line="231" selection-start-column="71" selection-end-line="231" selection-end-column="71" />
+        <state relative-caret-position="126">
+          <caret line="57" column="34" lean-forward="false" selection-start-line="57" selection-start-column="34" selection-end-line="57" selection-end-column="34" />
           <folding>
             <element signature="e#222#232#0" expanded="true" />
           </folding>

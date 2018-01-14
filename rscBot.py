@@ -32,7 +32,7 @@ def import_gameList(filename='gameList.csv'):
 
 
 # Import the csv of User IDs into a 1 x U matrix (U = # of users)
-def import_userList(filename='userList.csv'):
+def import_userList(filename='userlist.csv'):
     # check for empty file
     if os.stat(filename).st_size != 0:
         f = open(filename, "r")
@@ -50,19 +50,18 @@ def import_userList(filename='userList.csv'):
 
 
 
-def loadUsers(filename='userList.csv'):
+def loadUsers(filename='userlist.csv'):
     # load all users
     for server in bot.servers:
         for member in server.members:
             #print(type(userList))
             if userList.size >= 2:
-                for i in range(userList.size):
-                    if member.id == userList[i]:
-                        print(member.id + "Was found")  # they are already in the file
-                    else:  # add them
-                        with open(filename, "a") as csvfile:
-                            filewriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
-                            filewriter.writerow([member.id])
+                if member.id in userList:
+                    print(member.id + "Was found")  # they are already in the file
+                else:  # add them
+                    with open(filename, "a") as csvfile:
+                        filewriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+                        filewriter.writerow([member.id])
             else:
                 if userList:  # check if user list is empty
                     print(member.id)
