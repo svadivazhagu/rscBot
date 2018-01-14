@@ -22,6 +22,8 @@ def import_gameList(filename='gameList.csv'):
         f.close()
         return gameList
 
+gameList = import_gameList('gameList.csv')
+
 #Import the csv of User IDs into a 1 x U matrix (U = # of users)
 def import_userList(filename='userList.csv'):
     if os.stat(filename).st_size != 0:
@@ -30,6 +32,9 @@ def import_userList(filename='userList.csv'):
         #print(userList)
         f.close()
         return userList
+
+userList = import_userList('userList.csv')
+
 
 '''
 Import the csv of User IDs into a G x U  binary matrix where
@@ -41,12 +46,18 @@ def import_binary(filename='Bmatrix.csv'):
         f = open(filename, "r")
         binaryMatrix = np.genfromtxt(filename, dtype='int', delimiter=' ')
         #print(binaryMatrix)
+        # load lists
+        userList = import_userList()
+        gameList = import_gameList()
+        # check if any list is empty
+        if type(userList) != type(None) & type(gameList) != type(None) & type(binaryMatrix) != type(None):
+            binary.shape = (len(gameList), len(userList))
+            print(binary.shape)
         f.close()
         return binaryMatrix
 
-gameList = import_gameList('gameList.csv')
 binary = import_binary('Bmatrix.csv')
-userList = import_userList('userList.csv')
+
 
 #returns game index from a string
 def findGameIndex(game_name):
@@ -96,6 +107,12 @@ def loadUsers():
                 with open('userlist.csv', "a") as csvfile:
                     filewriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
                     filewriter.writerow([member.id])
+def refreshBinary():
+
+
+
+
+
 
 @bot.event
 async def on_ready():
