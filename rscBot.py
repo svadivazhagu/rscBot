@@ -55,6 +55,7 @@ def findGameIndex(game_name):
         for i in range(len(gameList)):
             if gameList[i] == game_name:
                 return i
+    return None
 
 #returns game name from a index
 def findGameName(index):
@@ -62,17 +63,62 @@ def findGameName(index):
     if type(gameList) != type(None):
         if len(gameList) <= index:
             return gamelist[index]
+    return None
+
+def findUserIndex(user_id):
+    userList = import_userList()
+    if type(userList) != type(None):
+        for i in range(len(userList)):
+            if userList[i] == user_id:
+                return i
+    return None
+
+def findUserId(index):
+    userList = import_userList()
+    if type(userList) != type(None):
+        if len(userList) <= index:
+            return userList[index]
+    return None
+
+#load all users into the userscsv file
+def loadUsers():
+    for server in bot.servers:
+        for member in server.members:
+            if type(userList) != type(None): #check if user list is empty
+                #if not empty then check ids with current file
+                if member.id in userList:
+                    print(member.id + "Was found") #they are already in the file
+                else: #add them
+                    with open('userlist.csv', "a") as csvfile:
+                        filewriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+                        filewriter.writerow([member.id])
+            else:   #add all users to file
+                with open('userlist.csv', "a") as csvfile:
+                    filewriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+                    filewriter.writerow([member.id])
 
 @bot.event
 async def on_ready():
-    #on start up ge list of all members and add them to the matrix
+    #on start up get list of all members and add them to the matrix
+    loadUsers()
     print(gameList)
     print(userList)
     print('Ready when you are, with username: ' + bot.user.name + " and the ID: " + bot.user.id)
 
 @bot.event
 async def on_member_join(member):
-    print(member.id)
+    if type(userList) != type(None):  # check if user list is empty
+        # if not empty then check ids with current file
+        if member.id in userList:
+            print(member.id + "Was found")  # they are already in the file
+        else:  # add them
+            with open('userlist.csv', "a") as csvfile:
+                filewriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+                filewriter.writerow([member.id])
+    else:  # add all users to file
+        with open('userlist.csv', "a") as csvfile:
+            filewriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+            filewriter.writerow([member.id])
 
 @bot.command(pass_context=True)
 async def ping(ctx):
@@ -204,7 +250,7 @@ async def onlineCheck(ctx):
 
 
 # client.run('MzkyOTE3OTU1NDQ2MzA4ODY1.DRuPOw.Z3aGgdvDuKP8wAkHMt2vSPSEwZ4')
-bot.run('NDAxNjM3MTIzNzgzOTE3NTY4.DTtFPQ.t9TTZ5qM2KNoDXr87LpvxVxqMgc')
+bot.run('NDAxNTM4OTU0NDg4MTg0ODMy.DTrriQ.y2QzATd4j8PVsHkuhlwv7Azmnyc')
 
 # SURYA AUTH: NDAxNjM3MTIzNzgzOTE3NTY4.DTtFPQ.t9TTZ5qM2KNoDXr87LpvxVxqMgc
 # DAN AUTH: NDAxNTM4OTU0NDg4MTg0ODMy.DTrriQ.y2QzATd4j8PVsHkuhlwv7Azmnyc
