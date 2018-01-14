@@ -7,60 +7,105 @@ import numpy as np
 import discord
 from discord.ext import commands
 import os
-import time
 
 bot = commands.Bot(command_prefix='!')
+
 global gameList
 global userList
 global binary
-
-#Import the csv of Game Names into a 1 x G matrix (G = # of Games
+# Load the csv of Game Names into a 1 x G matrix (G = # of Games)
 def import_gameList(filename='gameList.csv'):
+
     if os.stat(filename).st_size != 0:
         f = open(filename, "r")
         gameList = np.genfromtxt(filename, dtype='str', delimiter=' ')
         f.close()
+        print(type(gameList))
+        #gameList.shape = (1, len(gameList))
+        print(gameList.shape)
+        print(gameList.size)
+        print(gameList)
+        return gameList
+    else:
+        gameList = np.empty((1, 1), dtype='str')
         return gameList
 
-gameList = import_gameList('gameList.csv')
 
-#Import the csv of User IDs into a 1 x U matrix (U = # of users)
+# Import the csv of User IDs into a 1 x U matrix (U = # of users)
 def import_userList(filename='userList.csv'):
+
+    # global userList
+    # check for empty file
+    print(os.stat(filename).st_size)
     if os.stat(filename).st_size != 0:
+        print("HELLO!")
         f = open(filename, "r")
         userList = np.genfromtxt(filename, dtype='str', delimiter=' ')
-        #print(userList)
         f.close()
+        userList.shape = (1, len(userList))
+        print(userList.shape)
+        print(type(userList))
+        # load all users
+        for server in bot.servers:
+            for member in server.members:
+                print(type(userList))
+                if type(userList) != type(None):  # check if user list is empty
+                    # if not empty then check ids with current file
+                    for i in range(len(userList)):
+                        print(member.id)
+                        print(userList[i])
+                        if member.id == userList[i]:
+                            print(member.id + "Was found")  # they are already in the file
+                        else:  # add them
+                            with open(filename, "a") as csvfile:
+                                filewriter = csv.writer(csvfile, delimiter=',', quotechar='|',
+                                                        quoting=csv.QUOTE_MINIMAL)
+                                filewriter.writerow([member.id])
+                else:  # add all users to file
+                    print(member.id)
+                    with open(filename, "a") as csvfile:
+                        filewriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+                        filewriter.writerow([member.id])
+
+        print(userList.shape)
+        print(userList)
         return userList
 
-userList = import_userList('userList.csv')
 
+# Import the csv of User IDs into a G x U  binary matrix where
+# 1 = they have the game
+# 0 = they do not have the game
 
-'''
-Import the csv of User IDs into a G x U  binary matrix where
-1 = they have the game
-0 = dont have the game
-'''
 def import_binary(filename='Bmatrix.csv'):
+    global binary
     if os.stat(filename).st_size != 0:
         f = open(filename, "r")
-        binaryMatrix = np.genfromtxt(filename, dtype='int', delimiter=' ')
-        #print(binaryMatrix)
+        binary = np.genfromtxt(filename, dtype='int', delimiter=' ')
+        # print(binaryMatrix)
         # load lists
         userList = import_userList()
         gameList = import_gameList()
         # check if any list is empty
-        if type(userList) != type(None) & type(gameList) != type(None) & type(binaryMatrix) != type(None):
+        if type(userList) != type(None) & type(gameList) != type(None) & type(binary) != type(None):
             binary.shape = (len(gameList), len(userList))
             print(binary.shape)
+            print(binary)
+
+        elif type(userList) != type(None) & type(gameList) != type(None):
+            binary = np.zeros((len(gameList), len(userList)), dtype=int)
+            print(binary)
+
+        else:
+            binary = np.zeros((1, 1), dtype=int)
+            print(binary)
+
         f.close()
-        return binaryMatrix
-
-binary = import_binary('Bmatrix.csv')
+        return binary
 
 
-#returns game index from a string
+# returns game index from a string
 def findGameIndex(game_name):
+    global gameList
     gameList = import_gameList()
     if type(gameList) != type(None):
         for i in range(len(gameList)):
@@ -68,15 +113,19 @@ def findGameIndex(game_name):
                 return i
     return None
 
-#returns game name from a index
+
+# returns game name from a index
 def findGameName(index):
+    global gameList
     gameList = import_gameList()
     if type(gameList) != type(None):
         if len(gameList) <= index:
             return gamelist[index]
     return None
 
+
 def findUserIndex(user_id):
+    global userList
     userList = import_userList()
     if type(userList) != type(None):
         for i in range(len(userList)):
@@ -84,44 +133,33 @@ def findUserIndex(user_id):
                 return i
     return None
 
+
 def findUserId(index):
+    global userList
     userList = import_userList()
-    if type(userList) != type(None):
+    if userList != type(None):
         if len(userList) <= index:
             return userList[index]
     return None
 
-#load all users into the userscsv file
-def loadUsers():
-    for server in bot.servers:
-        for member in server.members:
-            if type(userList) != type(None): #check if user list is empty
-                #if not empty then check ids with current file
-                if member.id in userList:
-                    print(member.id + "Was found") #they are already in the file
-                else: #add them
-                    with open('userlist.csv', "a") as csvfile:
-                        filewriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
-                        filewriter.writerow([member.id])
-            else:   #add all users to file
-                with open('userlist.csv', "a") as csvfile:
-                    filewriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
-                    filewriter.writerow([member.id])
-def refreshBinary():
-
-
-
-
-
 
 @bot.event
 async def on_ready():
-    #on start up get list of all members and add them to the matrix
-    loadUsers()
-    print(gameList)
-    print(userList)
+    #
+    # on start up get list of all members and add them to the matrix
+    print('Loading Game List...')
+    global gameList
+    gameList = import_gameList()
+    print('Loading User List...')
+    global userList
+    userList = import_userList()
+    # loadUsers(userList)  # load any new users
+    print('Loading Binary Relations...')
+    global binary
     print('Ready when you are, with username: ' + bot.user.name + " and the ID: " + bot.user.id)
 
+
+'''
 @bot.event
 async def on_member_join(member):
     if type(userList) != type(None):  # check if user list is empty
@@ -136,6 +174,8 @@ async def on_member_join(member):
         with open('userlist.csv', "a") as csvfile:
             filewriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
             filewriter.writerow([member.id])
+'''
+
 
 @bot.command(pass_context=True)
 async def ping(ctx):
@@ -148,25 +188,12 @@ async def hello(ctx):
     await bot.say("HELLO WORLD!")
     print("Hello World!")
 
-# Client event commented out for now, as bot commands seem to be more efficient for our tasks.
-# @client.event
-# async def on_message(message):
-#     if message.content.startswith('$start'):
-#         await client.send_message(message.channel, 'Type $stop 4 times.')
-#         for i in range(4):
-#             msg = await client.wait_for_message(author=message.author, content='$stop')
-#             fmt = '{} left to go.' + message.author.id
-#             await client.send_message(message.channel, fmt.format(3 - i))
-#
-#         await client.send_message(message.channel, 'Good job!')
-
-
-
 
 @bot.command(pass_context=True)
 async def recruit(ctx):
-    await bot.send_message(discord.User(id = ctx.message.author.id), 'Type yes if you can join, no if you cannot. You have one minute to respond.')
-    userDecision = await bot.wait_for_message(timeout = 60, author=ctx.message.author)
+    await bot.send_message(discord.User(id=ctx.message.author.id),
+                           'Type yes if you can join, no if you cannot. You have one minute to respond.')
+    userDecision = await bot.wait_for_message(timeout=60, author=ctx.message.author)
     if type(userDecision) == type(None):
         await bot.send_message(discord.User(id=ctx.message.author.id), "You didn't make it in time!")
         await bot.say(ctx.message.author.display_name + " didn't respond in time.")
@@ -174,6 +201,7 @@ async def recruit(ctx):
         await bot.say(ctx.message.author.display_name + " is not going to join.")
     else:
         await bot.say(ctx.message.author.display_name + " is going to join!")
+
 
 @bot.command(pass_context=True)
 async def recruitUser(ctx, user: discord.Member):
@@ -186,6 +214,7 @@ async def recruitUser(ctx, user: discord.Member):
         await bot.say(user.display_name + " is not going to join.")
     else:
         await bot.say(user.display_name + " is going to join!")
+
 
 @bot.command(pass_context=True)
 async def info(ctx, user: discord.Member):
@@ -205,16 +234,18 @@ async def kick(ctx, user: discord.Member):
     await bot.say(":boot: Cya, {}. Ya loser!".format(user.name))
     await bot.kick(user)
 
+
 # Adds user ID under game entry in CSV file
 @bot.command(pass_context=True)
 async def add(ctx):
-    splitMsg = ctx.message.content.split(" ")[1].lower()
-    userid = ctx.message.author.id
+    binary = import_binary()
+    fullWord = ''.join(ctx.message.content.split(" ")[1])
     game = ''.join(ctx.message.content.split(" ")[1])
-    with open(userList, "a") as csvfile:
-        filewriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
-        filewriter.writerow([userid])
+    userid = findUserIndex(ctx.message.author.id)
+    game_index = findGameIndex(fullWord)
+    binary[game_index][userid] = 1
     await bot.say(game + " has been added to your game list.")
+
 
 '''
 # Adds user ID in new column game entry in CSV file when they play the game with discord running in the background
@@ -223,43 +254,36 @@ async def on_member_update():
     This checks updates for one user (ie games)
 '''
 
-# Adds user to specific instance of a game
-@bot.command(pass_context=True)
-async def join(ctx):
-    await bot.say("YOU RAN JOIN")
-    splitMsg = ctx.message.content.split(" ")[1].lower()
-
-
 
 # Adds Game entry in CSV file
 @bot.command(pass_context=True)
 async def create(ctx):
-    splitMsg = ctx.message.content.split(" ")[1].lower()
-    fullWord = ''.join(ctx.message.content.split(" ")[1])
-
+    intoData = ctx.message.content.split(" ")[1].lower()
+    fullWord = ''.join(intoData)
     with open('gameList.csv', "a") as csvfile:
         filewriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
-        filewriter.writerow([splitMsg])
+        filewriter.writerow([intoData])
     await bot.say(fullWord + " has been added to the game list.")
 
 
 # Lists all games added in the csv file
 @bot.command(pass_context=True)
 async def gamelist(ctx):
+    #global gameList
     gameList = import_gameList()
-    if type(gameList) != type(None):
-        #print(type(gameList))
+    if gameList.size >= 2:
         await bot.say("We got:")
-        for i in range(len(gameList)):
-            #print(i)
-            #print(gameList[i])
-            await bot.say(gameList[i])
+        await bot.say(', '.join(gameList))
     else:
-        await bot.say("Game List is empty")
+        if gameList:
+            await bot.say("We got:")
+            await bot.say(gameList)
+        else:
+            await bot.say("Game List is empty")
+
 
 @bot.command(pass_context=True)
 async def onlineCheck(ctx):
-   # print(bot.get_all_members())
     for server in bot.servers:
         for member in server.members:
             if member.status == discord.Status.online:
