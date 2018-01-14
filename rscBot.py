@@ -7,7 +7,6 @@ import numpy as np
 import discord
 from discord.ext import commands
 import os
-
 bot = commands.Bot(command_prefix='!')
 
 global gameList
@@ -48,8 +47,6 @@ def import_userList(filename='userlist.csv'):
         return userList
 
 
-
-
 def loadUsers(filename='userlist.csv'):
     # load all users
     for server in bot.servers:
@@ -57,7 +54,7 @@ def loadUsers(filename='userlist.csv'):
             #print(type(userList))
             if userList.size >= 2:
                 if member.id in userList:
-                    print(member.id + "Was found")  # they are already in the file
+                    print(member.id + " Was found")  # they are already in the file
                 else:  # add them
                     with open(filename, "a") as csvfile:
                         filewriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
@@ -67,7 +64,7 @@ def loadUsers(filename='userlist.csv'):
                     print(member.id)
                     # if not empty then check ids with current file
                     if member.id == userList[0]:
-                        print(member.id + "Was found")  # they are already in the file
+                        print(member.id + " Was found")  # they are already in the file
                     else:  # add them
                         with open(filename, "a") as csvfile:
                             filewriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
@@ -166,22 +163,30 @@ async def on_ready():
     print('Ready when you are, with username: ' + bot.user.name + " and the ID: " + bot.user.id)
 
 
-'''
 @bot.event
 async def on_member_join(member):
-    if type(userList) != type(None):  # check if user list is empty
-        # if not empty then check ids with current file
+    if userList.size >= 2:
         if member.id in userList:
-            print(member.id + "Was found")  # they are already in the file
+            print(member.id + " Was found")  # they are already in the file
         else:  # add them
             with open('userlist.csv', "a") as csvfile:
                 filewriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
                 filewriter.writerow([member.id])
-    else:  # add all users to file
-        with open('userlist.csv', "a") as csvfile:
-            filewriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
-            filewriter.writerow([member.id])
-'''
+    else:
+        if userList:  # check if user list is empty
+            print(member.id)
+            # if not empty then check ids with current file
+            if member.id == userList[0]:
+                print(member.id + " Was found")  # they are already in the file
+            else:  # add them
+                with open('userlist.csv', "a") as csvfile:
+                    filewriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+                    filewriter.writerow([member.id])
+        else:  # file is empty, add all users to file
+            print(member.id)
+            with open('userlist.csv', "a") as csvfile:
+                filewriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+                filewriter.writerow([member.id])
 
 
 @bot.command(pass_context=True)
@@ -216,21 +221,22 @@ async def recruitUser(ctx, user: discord.Member):
     embed = discord.Embed(title="Let's Game!", description=ctx.message.author.display_name + " requests your holy presence!", color=0x00ffff)
     if type(ctx.message.author.voice.voice_channel) == type(None):
         print(ctx.message.author.voice.voice_channel)
-        embed.add_field(name="In Server: ", value=ctx.message.author.server.name)
+        embed.add_field(name="In Server: ",
+                        value=ctx.message.author.server.name)
     else:
         embed.add_field(name="In Server: " + ctx.message.author.server.name, value="Voice Channel: " + ctx.message.author.voice.voice_channel.name)
-        embed.add_field(name="Please reply with:", value="yes if you would like to play, and no if you cannot.", inline=True)
-        embed.add_field(name= "Time Requirement! :timer:", value="Please respond to this message within 60 seconds.")
-        embed.set_thumbnail(url=user.avatar_url)
-        await bot.send_message(discord.User(id = user.id), embed=embed)
-        userDecision = await bot.wait_for_message(timeout=60, author=user)
-        if type(userDecision) == type(None):
-            await bot.send_message(discord.User(id=user.id), "You didn't make it in time!")
-            await bot.say(user.display_name + " didn't respond in time.")
-        elif str(userDecision.content) == "no":
-            await bot.say(user.display_name + " is not going to join.")
-        else:
-            await bot.say(user.display_name + " is going to join!")
+    embed.add_field(name="Please reply with:", value="yes if you would like to play, and no if you cannot.", inline=True)
+    embed.add_field(name= "Time Requirement! :timer:", value="Please respond to this message within 60 seconds.")
+    embed.set_thumbnail(url=user.avatar_url)
+    await bot.send_message(discord.User(id = user.id), embed=embed)
+    userDecision = await bot.wait_for_message(timeout=60, author=user)
+    if type(userDecision) == type(None):
+        await bot.send_message(discord.User(id=user.id), "You didn't make it in time!")
+        await bot.say(user.display_name + " didn't respond in time.")
+    elif str(userDecision.content) == "no":
+        await bot.say(user.display_name + " is not going to join.")
+    else:
+        await bot.say(user.display_name + " is going to join!")
 
 
 @bot.command(pass_context=True)
