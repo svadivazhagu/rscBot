@@ -57,7 +57,7 @@ def loadUsers(filename='userList.csv'):
             #print(type(userList))
             if userList.size >= 2:
                 for i in range(userList.size):
-                    if member.id == userList[0]:
+                    if member.id == userList[i]:
                         print(member.id + "Was found")  # they are already in the file
                     else:  # add them
                         with open(filename, "a") as csvfile:
@@ -198,6 +198,21 @@ async def hello(ctx):
 
 
 @bot.command(pass_context=True)
+async def recruit(ctx):
+    await bot.send_message(discord.User(id=ctx.message.author.id),
+                           'Type yes if you can join, no if you cannot. You have one minute to respond.')
+    userDecision = await bot.wait_for_message(timeout=60, author=ctx.message.author)
+    if type(userDecision) == type(None):
+        await bot.send_message(discord.User(id=ctx.message.author.id), "You didn't make it in time!")
+        await bot.say(ctx.message.author.display_name + " didn't respond in time.")
+    elif str(userDecision.content) == "no":
+        await bot.say(ctx.message.author.display_name + " is not going to join.")
+    else:
+        await bot.say(ctx.message.author.display_name + " is going to join!")
+
+
+
+@bot.command(pass_context=True)
 async def recruitUser(ctx, user: discord.Member):
     embed = discord.Embed(title="Let's Game!", description=ctx.message.author.display_name + " requests your holy presence!", color=0x00ffff)
     if type(ctx.message.author.voice.voice_channel) == type(None):
@@ -212,23 +227,11 @@ async def recruitUser(ctx, user: discord.Member):
         userDecision = await bot.wait_for_message(timeout=60, author=user)
         if type(userDecision) == type(None):
             await bot.send_message(discord.User(id=user.id), "You didn't make it in time!")
-            await bot.say(user.display_name + " didn't respond in time.") 
+            await bot.say(user.display_name + " didn't respond in time.")
         elif str(userDecision.content) == "no":
             await bot.say(user.display_name + " is not going to join.")
         else:
             await bot.say(user.display_name + " is going to join!")
-
-@bot.command(pass_context=True)
-async def recruitUser(ctx, user: discord.Member):
-    await bot.send_message(discord.User(id=user.id), 'Type yes if you can join; no if you cannot. You have one  minute')
-    userDecision = await bot.wait_for_message(timeout=60, author=user)
-    if type(userDecision) == type(None):
-        await bot.send_message(discord.User(id=user.id), "You didn't make it in time!")
-        await bot.say(user.display_name + " didn't respond in time.")
-    elif str(userDecision.content) == "no":
-        await bot.say(user.display_name + " is not going to join.")
-    else:
-        await bot.say(user.display_name + " is going to join!")
 
 
 @bot.command(pass_context=True)

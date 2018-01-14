@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e54be328-503e-490c-8641-b5e996252517" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gameList.csv" afterPath="$PROJECT_DIR$/gameList.csv" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rscBot.py" afterPath="$PROJECT_DIR$/rscBot.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/userList.csv" afterPath="$PROJECT_DIR$/userList.csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/userlist.csv" afterPath="$PROJECT_DIR$/userlist.csv" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -40,8 +38,8 @@
       <file leaf-file-name="rscBot.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/rscBot.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="402">
-              <caret line="214" column="74" lean-forward="true" selection-start-line="214" selection-start-column="74" selection-end-line="214" selection-end-column="74" />
+            <state relative-caret-position="500">
+              <caret line="231" column="71" lean-forward="true" selection-start-line="231" selection-start-column="71" selection-end-line="231" selection-end-column="71" />
               <folding>
                 <element signature="e#222#232#0" expanded="true" />
               </folding>
@@ -654,8 +652,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/rscBot.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="402">
-          <caret line="214" column="74" lean-forward="true" selection-start-line="214" selection-start-column="74" selection-end-line="214" selection-end-column="74" />
+        <state relative-caret-position="500">
+          <caret line="231" column="71" lean-forward="true" selection-start-line="231" selection-start-column="71" selection-end-line="231" selection-end-column="71" />
           <folding>
             <element signature="e#222#232#0" expanded="true" />
           </folding>
