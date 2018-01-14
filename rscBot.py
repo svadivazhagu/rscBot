@@ -54,7 +54,7 @@ def loadUsers(filename='userlist.csv'):
                 else:  # add them
                     with open(filename, "a") as csvfile:
                         filewriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
-                        filewriter.writerow([member.id])
+                        filewriter.writerow([member.id,][member.display_name])
             else:
                 if userList:  # check if user list is empty
                     print(member.id)
@@ -64,12 +64,12 @@ def loadUsers(filename='userlist.csv'):
                     else:  # add them
                         with open(filename, "a") as csvfile:
                             filewriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
-                            filewriter.writerow([member.id])
+                            filewriter.writerow([member.id][ member.display_name])
                 else:  # file is empty, add all users to file
                     print(member.id)
                     with open(filename, "a") as csvfile:
                         filewriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
-                        filewriter.writerow([member.id])
+                        filewriter.writerow([member.id][ member.display_name])
 
 
 # gets the size of a list
@@ -94,7 +94,7 @@ def import_binary(filename='Bmatrix.csv'):
     if List_Size(userList) + List_Size(gameList) > 0:
         binary = np.zeros((List_Size(gameList), List_Size(userList)), dtype=int)
 
-    #print(np.count_nonzero(binary))
+    # print(np.count_nonzero(binary))
     if os.stat(filename).st_size != 0:
         f = open(filename, "r")
         binfile = np.genfromtxt(filename, dtype='int', delimiter=' ')
@@ -112,11 +112,12 @@ def findGameIndex(game_name):
     global gameList
     gameList = import_gameList()
     if List_Size(gameList):
-        for i in range(0,List_Size(gameList)+1):
+        for i in range(0, List_Size(gameList) + 1):
             if gameList[i] == game_name:
                 return i
         return -1
     return 0
+
 
 # returns game name from a index
 def findGameName(index):
@@ -127,6 +128,7 @@ def findGameName(index):
             return gamelist[index]
     return None
 
+
 def findUserIndex(user_id):
     global userList
     userList = import_userList()
@@ -136,6 +138,7 @@ def findUserIndex(user_id):
                 return i
     return None
 
+
 def findUserId(index):
     global userList
     userList = import_userList()
@@ -143,6 +146,7 @@ def findUserId(index):
         if List_Size(userList) <= index:
             return userList[index]
     return 0
+
 
 @bot.event
 async def on_ready():
@@ -155,6 +159,7 @@ async def on_ready():
     global userList
     userList = import_userList()
     loadUsers()  # load any new users
+    print(userList)
     print('Loading Binary Relations...')
     global binary
     binary = import_binary()
@@ -169,7 +174,7 @@ async def on_member_join(member):
         else:  # add them
             with open('userlist.csv', "a") as csvfile:
                 filewriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
-                filewriter.writerow([member.id])
+                filewriter.writerow([member.id][ member.display_name])
     else:
         if userList:  # check if user list is empty
             print(member.id)
@@ -179,12 +184,12 @@ async def on_member_join(member):
             else:  # add them
                 with open('userlist.csv', "a") as csvfile:
                     filewriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
-                    filewriter.writerow([member.id])
+                    filewriter.writerow([member.id][ member.display_name])
         else:  # file is empty, add all users to file
             print(member.id)
             with open('userlist.csv', "a") as csvfile:
                 filewriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
-                filewriter.writerow([member.id])
+                filewriter.writerow([member.id][ member.display_name])
 
 
 @bot.command(pass_context=True)
@@ -201,16 +206,37 @@ async def hello(ctx):
 
 @bot.command(pass_context=True)
 async def recruit(ctx):
-    await bot.send_message(discord.User(id=ctx.message.author.id),
-                           'Type yes if you can join, no if you cannot. You have one minute to respond.')
-    userDecision = await bot.wait_for_message(timeout=60, author=ctx.message.author)
-    if type(userDecision) == type(None):
-        await bot.send_message(discord.User(id=ctx.message.author.id), "You didn't make it in time!")
-        await bot.say(ctx.message.author.display_name + " didn't respond in time.")
-    elif str(userDecision.content) == "no":
-        await bot.say(ctx.message.author.display_name + " is not going to join.")
-    else:
-        await bot.say(ctx.message.author.display_name + " is going to join!")
+    with open(ctx.message.content.split(" ")[1].lower() + ".txt", "r", newline="\n") as file_handler:
+
+        while True:
+            line = file_handler.readline()
+            line = line.rstrip()
+            await bot.say(line)
+            embed = discord.Embed(title="Let's Game!",
+                                  description=ctx.message.author.display_name + " requests your holy presence!",
+                                  color=0x00ffff)
+            if type(ctx.message.author.voice.voice_channel) == type(None):
+                print(ctx.message.author.voice.voice_channel)
+                embed.add_field(name="In Server: ",
+                                value=ctx.message.author.server.name)
+            else:
+                embed.add_field(name="In Server: " + ctx.message.author.server.name,
+                                value="Voice Channel: " + ctx.message.author.voice.voice_channel.name)
+            embed.add_field(name="Please reply with:", value="yes if you would like to play, and no if you cannot.",
+                            inline=True)
+            embed.add_field(name="Time Requirement! :timer:", value="Please respond to this message within 60 seconds.")
+            embed.set_thumbnail(url=ctx.message.author.avatar_url)
+            await bot.send_message(discord.User(id=line), embed=embed)
+            userDecision = await bot.wait_for_message(timeout=60, author=bot.get_user_info(line))
+            if type(userDecision) == type(None):
+                await bot.send_message(discord.User(id=line), "You didn't make it in time!")
+                await bot.say(line + " didn't respond in time.")
+            elif str(userDecision.content) == "no":
+                await bot.say(line + " is not going to join.")
+            else:
+                await bot.say(line + " is going to join!")
+            if not line:
+                break
 
 
 @bot.command(pass_context=True)
@@ -261,11 +287,11 @@ async def kick(ctx, user: discord.Member):
 # Adds user ID under game entry in CSV file
 @bot.command(pass_context=True)
 async def add(ctx):
-    binary = import_binary() #load the binary
+    binary = import_binary()  # load the binary
     print(binary.shape)
     intoData = ctx.message.content.split(" ")[1].lower()
 
-    useridindex= findUserIndex(ctx.message.author.id)
+    useridindex = findUserIndex(ctx.message.author.id)
     print(useridindex)
 
     game_index = findGameIndex(intoData)
@@ -277,6 +303,7 @@ async def add(ctx):
     np.savetxt("Bmatrix.csv", binary, delimiter=" ")
     print(binary)
     await bot.say("User " + ctx.message.author.display_name + " has added game " + intoData + " to their list.")
+
 
 '''
 # Adds user ID in new column game entry in CSV file when they play the game with discord running in the background
@@ -327,6 +354,19 @@ async def userGames(ctx, user: discord.Member):
     await bot.say(binary[:, index])
     print(index)
     print(binary[:, index])
+
+
+@bot.command(pass_context=True)
+async def addGame(ctx):
+    with open(ctx.message.content.split(" ")[1].lower() + ".txt", "a", newline="\n") as file_handler:
+        # shortWord = ctx.message.content.split(" ")[1].lower()
+        shortWord = []
+        shortWord.append(ctx.message.author.id)
+        for item in shortWord:
+            file_handler.write("%s\n" % item)
+
+    file_handler.close()
+    await bot.say(shortWord)
 
 
 # client.run('MzkyOTE3OTU1NDQ2MzA4ODY1.DRuPOw.Z3aGgdvDuKP8wAkHMt2vSPSEwZ4')
