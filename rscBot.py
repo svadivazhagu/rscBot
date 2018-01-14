@@ -102,8 +102,8 @@ async def hello(ctx):
 
 @bot.command(pass_context=True)
 async def recruit(ctx):
-    await bot.send_message(discord.User(id = ctx.message.author.id), 'Type yes if you can join; no if you cannot.')
-    userDecision = await bot.wait_for_message(timeout = 5, author=ctx.message.author)
+    await bot.send_message(discord.User(id = ctx.message.author.id), 'Type yes if you can join, no if you cannot. You have one minute to respond.')
+    userDecision = await bot.wait_for_message(timeout = 60, author=ctx.message.author)
     if type(userDecision) == type(None):
         await bot.send_message(discord.User(id=ctx.message.author.id), "You didn't make it in time!")
         await bot.say(ctx.message.author.display_name + " didn't respond in time.")
@@ -114,8 +114,8 @@ async def recruit(ctx):
 
 @bot.command(pass_context=True)
 async def recruitUser(ctx, user: discord.Member):
-    await bot.send_message(discord.User(id=user.id), 'Type yes if you can join; no if you cannot.')
-    userDecision = await bot.wait_for_message(timeout=5, author=user)
+    await bot.send_message(discord.User(id=user.id), 'Type yes if you can join; no if you cannot. You have one  minute')
+    userDecision = await bot.wait_for_message(timeout=60, author=user)
     if type(userDecision) == type(None):
         await bot.send_message(discord.User(id=user.id), "You didn't make it in time!")
         await bot.say(user.display_name + " didn't respond in time.")
