@@ -33,10 +33,7 @@ def import_gameList(filename='gameList.csv'):
 
 # Import the csv of User IDs into a 1 x U matrix (U = # of users)
 def import_userList(filename='userList.csv'):
-
-    # global userList
     # check for empty file
-    print(os.stat(filename).st_size)
     if os.stat(filename).st_size != 0:
         print("HELLO!")
         f = open(filename, "r")

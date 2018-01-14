@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e54be328-503e-490c-8641-b5e996252517" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/Pythonbot.iml" afterPath="$PROJECT_DIR$/.idea/Pythonbot.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gameList.csv" afterPath="$PROJECT_DIR$/gameList.csv" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rscBot.py" afterPath="$PROJECT_DIR$/rscBot.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/userlist.csv" afterPath="$PROJECT_DIR$/userlist.csv" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -53,7 +48,7 @@
         <entry file="file://$PROJECT_DIR$/rscBot.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="213">
-              <caret line="35" column="0" lean-forward="true" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
+              <caret line="35" column="26" lean-forward="false" selection-start-line="35" selection-start-column="26" selection-end-line="35" selection-end-column="26" />
               <folding>
                 <element signature="e#222#232#0" expanded="true" />
               </folding>
@@ -667,7 +662,7 @@
     <entry file="file://$PROJECT_DIR$/rscBot.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="213">
-          <caret line="35" column="0" lean-forward="true" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
+          <caret line="35" column="26" lean-forward="false" selection-start-line="35" selection-start-column="26" selection-end-line="35" selection-end-column="26" />
           <folding>
             <element signature="e#222#232#0" expanded="true" />
           </folding>
