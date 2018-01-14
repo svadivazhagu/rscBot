@@ -2,6 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e54be328-503e-490c-8641-b5e996252517" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Bmatrix.csv" afterPath="$PROJECT_DIR$/Bmatrix.csv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gameList.csv" afterPath="$PROJECT_DIR$/gameList.csv" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rscBot.py" afterPath="$PROJECT_DIR$/rscBot.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -37,8 +40,8 @@
       <file leaf-file-name="rscBot.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/rscBot.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="603">
-              <caret line="239" column="0" lean-forward="true" selection-start-line="239" selection-start-column="0" selection-end-line="239" selection-end-column="0" />
+            <state relative-caret-position="396">
+              <caret line="63" column="9" lean-forward="false" selection-start-line="63" selection-start-column="9" selection-end-line="63" selection-end-column="9" />
               <folding>
                 <element signature="e#222#232#0" expanded="true" />
               </folding>
@@ -51,6 +54,7 @@
   <component name="FindInProjectRecents">
     <findStrings>
       <find>nick</find>
+      <find>not</find>
     </findStrings>
     <replaceStrings>
       <replace>display_name</replace>
@@ -651,8 +655,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/rscBot.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="603">
-          <caret line="239" column="0" lean-forward="true" selection-start-line="239" selection-start-column="0" selection-end-line="239" selection-end-column="0" />
+        <state relative-caret-position="396">
+          <caret line="63" column="9" lean-forward="false" selection-start-line="63" selection-start-column="9" selection-end-line="63" selection-end-column="9" />
           <folding>
             <element signature="e#222#232#0" expanded="true" />
           </folding>
